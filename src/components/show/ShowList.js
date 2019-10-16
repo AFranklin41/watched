@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ShowCard from "./ShowCard";
 import ShowManager from "../../modules/ShowManager";
+import { Button } from "semantic-ui-react";
 
 class ShowList extends Component {
 	//define what this component needs to render
@@ -23,15 +24,14 @@ class ShowList extends Component {
 		return (
 			<>
 				<section className="section-content">
-					<button
-						type="button"
-						className="btn"
+					<Button
 						onClick={() => {
 							this.props.history.push("/shows/new");
 						}}
 					>
 						Add Show
-					</button>
+					</Button>
+					<br />
 				</section>
 				<div className="container-cards">
 					{this.state.shows.map(singleShow => (

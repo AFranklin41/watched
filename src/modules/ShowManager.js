@@ -1,6 +1,5 @@
 import apiKey from "./ApiKey";
 const remoteURL = `http://localhost:5002`;
-// console.log(remoteURL);
 
 export default {
 	getUserShowList(userId) {

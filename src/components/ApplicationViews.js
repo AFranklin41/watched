@@ -13,6 +13,18 @@ class ApplicationViews extends Component {
 				<Route
 					path="/home"
 					render={props => {
+						return <Home {...props} />;
+					}}
+				/>
+				<Route
+					path="/shows"
+					render={props => {
+						return <ShowCard {...props} />;
+					}}
+				/>
+				{/* <Route
+					path="/home"
+					render={props => {
 						if (auth0client.isAuthenticated()) {
 							return <Home {...props} />;
 						} else {
@@ -52,7 +64,7 @@ class ApplicationViews extends Component {
 							return null;
 						}
 					}}
-				/>
+				/> */}
 			</React.Fragment>
 		);
 	}

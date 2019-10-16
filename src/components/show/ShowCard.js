@@ -1,32 +1,30 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+
+import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 class ShowCard extends Component {
 	render() {
 		return (
-			<div className="card">
-				<div className="card-content">
-					<h3>
-						Name:{" "}
-						<span className="card-showname">{this.props.showProp.name}</span>
-					</h3>
-
-					<p>{this.props.showProp.title}</p>
-
-					<Link to={`/shows/${this.props.showProp.id}`}>
-						<button>Details</button>
-					</Link>
-
-					<button
-						type="button"
-						onClick={() => {
-							this.props.history.push(`/shows/${this.props.showProp.id}/edit`);
-						}}
-					>
-						Edit
-					</button>
-				</div>
-			</div>
+			<>
+				<Card>
+					<Image src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fpeopledotcom.files.wordpress.com%2F2019%2F09%2Fgrizzly-bear.jpg&w=400&c=sc&poi=face&q=85" wrapped ui={false} />
+					<Card.Content>
+						<Card.Header>Matthew</Card.Header>
+						<Card.Meta>
+							<span className="date">Joined in 2015</span>
+						</Card.Meta>
+						<Card.Description>
+							Matthew is a musician living in Nashville.
+						</Card.Description>
+					</Card.Content>
+					<Card.Content extra>
+						<a href="hi.com">
+							<Icon name="user" />
+							22 Friends
+						</a>
+					</Card.Content>
+				</Card>
+			</>
 		);
 	}
 }
