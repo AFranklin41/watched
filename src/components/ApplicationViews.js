@@ -5,6 +5,8 @@ import Callback from "./auth/Callback";
 import auth0client from "./auth/Auth";
 import ShowList from "./show/ShowList";
 import ShowCard from "./show/ShowCard";
+import ShowAdd from "./show/ShowAdd";
+import ShowAddModal from "./show/ShowAddModal";
 
 class ApplicationViews extends Component {
 	render() {
@@ -17,9 +19,17 @@ class ApplicationViews extends Component {
 					}}
 				/>
 				<Route
+					exact
 					path="/shows"
 					render={props => {
-						return <ShowCard {...props} />;
+						return <ShowList {...props} />;
+					}}
+				/>
+				<Route
+					exact
+					path="/shows/new"
+					render={props => {
+						return <ShowAdd {...props} />;
 					}}
 				/>
 				{/* <Route
@@ -54,17 +64,7 @@ class ApplicationViews extends Component {
 						}
 					}}
 				/>
-				<Route
-					path="/shows/new"
-					render={props => {
-						if (auth0client.isAuthenticated()) {
-							return <ShowCard {...props} />;
-						} else {
-							auth0client.signIn();
-							return null;
-						}
-					}}
-				/> */}
+				 */}
 			</React.Fragment>
 		);
 	}

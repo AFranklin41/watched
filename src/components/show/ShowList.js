@@ -6,7 +6,8 @@ import { Button } from "semantic-ui-react";
 class ShowList extends Component {
 	//define what this component needs to render
 	state = {
-		shows: []
+		shows: [],
+		loadingStatus: false
 	};
 
 	componentDidMount() {

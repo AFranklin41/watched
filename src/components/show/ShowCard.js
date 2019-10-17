@@ -1,27 +1,36 @@
 import React, { Component } from "react";
-
-import { Card, Icon, Image, Button } from 'semantic-ui-react'
+import { Card, Image } from "semantic-ui-react";
+import ShowAddModal from "./ShowAddModal";
+import "./ShowCard.css";
 
 class ShowCard extends Component {
 	render() {
 		return (
 			<>
-				<Card>
-					<Image src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fpeopledotcom.files.wordpress.com%2F2019%2F09%2Fgrizzly-bear.jpg&w=400&c=sc&poi=face&q=85" wrapped ui={false} />
+				<Card key={this.props.showProp.id}>
 					<Card.Content>
-						<Card.Header>Matthew</Card.Header>
-						<Card.Meta>
-							<span className="date">Joined in 2015</span>
-						</Card.Meta>
-						<Card.Description>
-							Matthew is a musician living in Nashville.
-						</Card.Description>
-					</Card.Content>
-					<Card.Content extra>
-						<a href="hi.com">
-							<Icon name="user" />
-							22 Friends
-						</a>
+						<Image
+							src={`https://image.tmdb.org/t/p/original/${this.props.showProp.poster_path}`}
+						/>
+						<Card.Header className="card-header">
+							{this.props.showProp.original_name}
+						</Card.Header>
+
+						{this.props.showProp.first_air_date &&
+						this.props.showProp.first_air_date.length > 1 ? (
+							<Card.Meta>
+								<span className="date">
+									{this.props.showProp.first_air_date.split("-")[0]}
+								</span>
+							</Card.Meta>
+						) : (
+							!null
+						)}
+						{this.props.match.path === "/shows/new" ? (
+							<ShowAddModal {...this.props} />
+						) : (
+							!null
+						)}
 					</Card.Content>
 				</Card>
 			</>
