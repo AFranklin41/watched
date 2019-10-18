@@ -49,6 +49,7 @@ class ShowAdd extends Component {
 				{this.state.results.map(singleShow => (
 					<>
 						<ShowCard
+							key={singleShow.id}
 							showProp={singleShow}
 							getShowDetailsProp={this.getShowDetails}
 							{...this.props}

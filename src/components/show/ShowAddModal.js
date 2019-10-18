@@ -13,7 +13,8 @@ import {
 	Form,
 	Checkbox,
 	Label,
-	Dropdown
+	Dropdown,
+	SegmentInline
 } from "semantic-ui-react";
 // import custom css changes
 import "./ShowCard.css";
@@ -24,24 +25,64 @@ class ShowAddModal extends Component {
 	state = {
 		title: "",
 		dateWatched: "",
-		season: "",
-		episode: "",
+		seasonEpisodeCount: "",
+		seasonProgress: "",
+		episodeProgress: "",
 		timestamp: "",
 		showId: "",
 		showInfo: "",
+		seasons: [],
+		seasonNames: [],
+		modalOpen: false,
 		loadingStatus: false
 	};
 
 	// function to handle form field changes in our modal
 	handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
+	// function to specifically handle changing seasons so we can get the total episode count after a season is selected
+	seasonHandleChange = (e, { name, value }) => {
+		console.log(this.state.seasons);
+		this.setState({
+			[name]: value,
+			seasonEpisodeCount: this.state.seasons.find(
+				singleSeason => singleSeason.name === value
+			).episode_count
+		});
+		console.log(this.state.seasonEpisodeCount);
+	};
+
+	// function to handle opening our modal
+	handleOpen = () => this.setState({ modalOpen: true });
+
+	// function to handle closing our modal
+	handleClose = () => this.setState({ modalOpen: false });
+
 	// fetching specific show details from our external api and set them to state
 	getShowDetails = () => {
 		ShowManager.getShowDetails(this.props.showProp.id).then(({ data }) => {
-			this.setState({
-				showInfo: data
+			// declare variable for storing individual season names for a dropdown later
+			let seasonNames = [];
+
+			// map through seasons to get their names
+			data.seasons.map(singleSeason => {
+				let singleSeasonObject = {
+					key: singleSeason.name,
+					text: singleSeason.name,
+					value: singleSeason.name
+				};
+
+				seasonNames.push(singleSeasonObject);
+
+				return seasonNames;
 			});
-			console.log(this.state.showInfo.seasons);
+
+			this.setState({
+				showInfo: data,
+				seasons: data.seasons,
+				seasonNames: seasonNames
+			});
+			// console.log(this.state.showInfo);
 		});
 	};
 
@@ -56,10 +97,11 @@ class ShowAddModal extends Component {
 			const newShow = {
 				userId: parseInt(sessionStorage.getItem("credentials")),
 				dateWatched: this.state.dateWatched,
-				season: this.state.season,
-				episode: this.state.episode,
+				seasonProgress: this.state.seasonProgress,
+				episodeProgress: this.state.episodeProgress,
 				timestamp: this.state.timestamp,
-				showId: this.state.showId,
+				showId: this.state.showInfo.id,
+				movie: false,
 				loadingStatus: false
 			};
 			// api call that will post to the json server and push us back to the add show list
@@ -82,18 +124,20 @@ class ShowAddModal extends Component {
 			}
 		];
 
-		// const seasonOptions = this.state.showInfo.seasons.map(season => [season]);
-
 		return (
 			// adds a neat button below each show card that will call our modal
-			<Card.Content extra>
+			<Card.Content key={this.state.showId} extra>
 				<Modal
 					trigger={
-						<Button className="modal-add-button" onClick={this.getShowDetails}>
+						<Button className="modal-add-button" onClick={this.handleOpen}>
 							<Icon name="add" />
 							Add to My List
 						</Button>
 					}
+					onOpen={this.getShowDetails}
+					open={this.state.modalOpen}
+					onClose={this.handleClose}
+					closeIcon
 				>
 					{/* header for our modal, show title */}
 					<Modal.Header>{this.props.showProp.original_name}</Modal.Header>
@@ -118,7 +162,7 @@ class ShowAddModal extends Component {
 								!null
 							)}
 
-							{/* a brief overview of the show pulled from the api */}
+							{/* a brief overview of the show, pulled from the api */}
 							<p>{this.props.showProp.overview}</p>
 
 							{/* a form for entering the information we'll save to our local json */}
@@ -156,18 +200,37 @@ class ShowAddModal extends Component {
 									/>
 								</Form.Field>
 								<Form.Group>
-									<Form.Field>
-										<label>Season: </label>
-										<Dropdown
-											name="season"
-											placeholder="season"
-											type="text"
-											// options={seasonOptions}
-										/>
-									</Form.Field>
+									{this.state.seasonNames && this.state.seasonNames.length > 0
+										? [
+												<Form.Field>
+													<label>Season: </label>
+													<Dropdown
+														name="seasonProgress"
+														placeholder="season"
+														type="text"
+														options={this.state.seasonNames}
+														onChange={this.seasonHandleChange}
+													/>
+												</Form.Field>,
+												<Form.Field>
+													<label>Episode: </label>
+													<Form.Input
+														name="episodeProgress"
+														type="text"
+														onChange={this.handleChange}
+													/>
+													/ {this.state.seasonEpisodeCount}
+												</Form.Field>
+										  ]
+										: !null}
 								</Form.Group>
-								<Button type="submit">Submit</Button>
-								<Button>Cancel</Button>
+								<Button type="submit" color="green">
+									<Icon name="add" /> Add
+								</Button>
+
+								<Button color="red" onClick={this.handleClose}>
+									Cancel
+								</Button>
 							</Form>
 						</Modal.Description>
 					</Modal.Content>

@@ -1,0 +1,39 @@
+{
+	"users": [
+		{
+			"aud": "google-oauth2|110376823960518198428",
+			"name": "arfranklin41",
+			"id": 1
+		},
+		{
+			"aud": "auth0|5da5e14e0e30b90c69f5f40b",
+			"name": "a",
+			"id": 40
+		}
+	],
+	"userShows": [
+		{
+			"id": 1,
+			"userId": 1,
+			"showId": 53300,
+			"dateWatched": "time",
+			"progress": "show timestamp"
+		},
+		{
+			"id": 2,
+			"userId": 1,
+			"showId": 2,
+			"dateWatched": "time",
+			"progress": "show timestamp"
+		}
+	],
+	"userMovies": [
+		{
+			"id": 1,
+			"userId": 1,
+			"movieId": 1,
+			"dateWatched": "time",
+			"progress": "show timestamp"
+		}
+	]
+}
