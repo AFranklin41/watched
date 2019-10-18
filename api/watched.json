@@ -25,6 +25,19 @@
 			"showId": 2,
 			"dateWatched": "time",
 			"progress": "show timestamp"
+		},
+		{
+			"userId": 1,
+			"showTitle": "He-Man and the Masters of the Universe",
+			"dateWatched": "2019-10-18",
+			"seasonProgress": "Season 1",
+			"episodeProgress": "47",
+			"timestamp": "23:47",
+			"showId": 931,
+			"status": "Completed",
+			"movie": false,
+			"loadingStatus": false,
+			"id": 3
 		}
 	],
 	"userMovies": [

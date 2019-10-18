@@ -21,6 +21,13 @@ export default {
 	getShowDetails(id) {
 		return axios.get(`https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}`);
 	},
+
+	checkUserShowList(userId, showTitle) {
+		return fetch(`${remoteURL}/userShows?userId=${userId}&showTitle=${showTitle}`).then(
+			res => res.json()
+		);
+	},
+
 	post(newShow) {
 		return fetch(`${remoteURL}/userShows`, {
 			method: "POST",

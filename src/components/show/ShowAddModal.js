@@ -23,7 +23,7 @@ import "./ShowCard.css";
 class ShowAddModal extends Component {
 	// set state to all of the information we will need
 	state = {
-		title: "",
+		showTitle: "",
 		dateWatched: "",
 		seasonEpisodeCount: "",
 		seasonProgress: "",
@@ -33,6 +33,7 @@ class ShowAddModal extends Component {
 		showInfo: "",
 		seasons: [],
 		seasonNames: [],
+		status: "",
 		modalOpen: false,
 		loadingStatus: false
 	};
@@ -62,6 +63,7 @@ class ShowAddModal extends Component {
 	getShowDetails = () => {
 		ShowManager.getShowDetails(this.props.showProp.id).then(({ data }) => {
 			// declare variable for storing individual season names for a dropdown later
+
 			let seasonNames = [];
 
 			// map through seasons to get their names
@@ -78,7 +80,9 @@ class ShowAddModal extends Component {
 			});
 
 			this.setState({
+				showTitle: data.original_name,
 				showInfo: data,
+				showId: data.id,
 				seasons: data.seasons,
 				seasonNames: seasonNames
 			});
@@ -89,23 +93,34 @@ class ShowAddModal extends Component {
 	// function to add a new show to our list
 	addShow = evt => {
 		evt.preventDefault();
-		if (this.state.title === "" || this.state.dateWatched === "") {
-			window.alert("Please complete the form");
-		} else {
+
+		{
 			this.setState({ loadingStatus: true });
 			// object for our show that will be added to the local json
 			const newShow = {
 				userId: parseInt(sessionStorage.getItem("credentials")),
+				showTitle: this.state.showTitle,
 				dateWatched: this.state.dateWatched,
 				seasonProgress: this.state.seasonProgress,
 				episodeProgress: this.state.episodeProgress,
 				timestamp: this.state.timestamp,
-				showId: this.state.showInfo.id,
+				showId: this.state.showId,
+				status: this.state.status,
 				movie: false,
 				loadingStatus: false
 			};
 			// api call that will post to the json server and push us back to the add show list
-			ShowManager.post(newShow).then(() => this.props.history.push("/new"));
+			ShowManager.checkUserShowList(newShow.userId, newShow.showTitle).then(
+				parsedResponse => {
+					if (parsedResponse.length === 0) {
+						ShowManager.post(newShow);
+					} else {
+						alert("This show is already on your list!");
+					}
+				}
+			);
+
+			// .then(() => this.props.history.push("/shows/new"));
 		}
 	};
 
@@ -186,6 +201,7 @@ class ShowAddModal extends Component {
 										name="status"
 										selection
 										options={statusOptions}
+										onChange={this.handleChange}
 									/>
 								</Form.Field>
 								{/* form field for time stamping */}
@@ -224,7 +240,7 @@ class ShowAddModal extends Component {
 										  ]
 										: !null}
 								</Form.Group>
-								<Button type="submit" color="green">
+								<Button type="submit" color="green" onClick={this.addShow}>
 									<Icon name="add" /> Add
 								</Button>
 
@@ -237,9 +253,6 @@ class ShowAddModal extends Component {
 				</Modal>
 			</Card.Content>
 		);
-		// : (
-		// 	!null
-		// );
 	}
 }
 
