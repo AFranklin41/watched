@@ -1,7 +1,7 @@
 // import react components
 import React, { Component } from "react";
 // import api manager
-import ShowManager from "../../modules/ShowManager";
+import MovieManager from "../../modules/MovieManager";
 // import semantic ui components
 import {
 	Button,
@@ -11,28 +11,20 @@ import {
 	Icon,
 	Image,
 	Form,
-	Checkbox,
-	Label,
-	Dropdown,
-	SegmentInline
+	Dropdown
 } from "semantic-ui-react";
 // import custom css changes
-import "./ShowCard.css";
+import "./MovieCard.css";
 
 // create our new component that will show a modal
-class ShowAddModal extends Component {
+class MovieAddModal extends Component {
 	// set state to all of the information we will need
 	state = {
-		showTitle: "",
+		movieTitle: "",
 		dateWatched: "",
-		seasonEpisodeCount: "",
-		seasonProgress: "",
-		episodeProgress: "",
 		timestamp: "",
-		showId: "",
-		showInfo: "",
-		seasons: [],
-		seasonNames: [],
+		movieId: "",
+		movieInfo: "",
 		status: "",
 		alreadyExists: false,
 		modalOpen: false,
@@ -43,16 +35,16 @@ class ShowAddModal extends Component {
 	handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
 	// function to specifically handle changing seasons so we can get the total episode count after a season is selected
-	seasonHandleChange = (e, { name, value }) => {
-		console.log(this.state.seasons);
-		this.setState({
-			[name]: value,
-			seasonEpisodeCount: this.state.seasons.find(
-				singleSeason => singleSeason.name === value
-			).episode_count
-		});
-		console.log(this.state.seasonEpisodeCount);
-	};
+	// seasonHandleChange = (e, { name, value }) => {
+	// 	console.log(this.state.seasons);
+	// 	this.setState({
+	// 		[name]: value,
+	// 		seasonEpisodeCount: this.state.seasons.find(
+	// 			singleSeason => singleSeason.name === value
+	// 		).episode_count
+	// 	});
+	// 	console.log(this.state.seasonEpisodeCount);
+	// };
 
 	// function to handle opening our modal
 	handleOpen = () => this.setState({ modalOpen: true });
@@ -61,13 +53,13 @@ class ShowAddModal extends Component {
 	handleClose = () => this.setState({ modalOpen: false });
 
 	// fetching specific show details from our external api and set them to state
-	getShowDetails = () => {
-		ShowManager.getShowDetails(this.props.showProp.id).then(({ data }) => {
+	getMovieDetails = () => {
+		MovieManager.getMovieDetails(this.props.movieProp.id).then(({ data }) => {
 			// declare variable for storing individual season names for a dropdown later
 
-			ShowManager.checkUserShowList(
+			MovieManager.checkUserMovieList(
 				parseInt(sessionStorage.getItem("credentials")),
-				this.state.showTitle
+				this.state.movieTitle
 			).then(parsedResponse => {
 				if (parsedResponse.length === 0) {
 					this.setState({
@@ -80,62 +72,44 @@ class ShowAddModal extends Component {
 				}
 			});
 
-			let seasonNames = [];
-
-			// map through seasons to get their names
-			data.seasons.map(singleSeason => {
-				let singleSeasonObject = {
-					key: singleSeason.name,
-					text: singleSeason.name,
-					value: singleSeason.name
-				};
-
-				seasonNames.push(singleSeasonObject);
-
-				return seasonNames;
-			});
-
 			this.setState({
-				showTitle: data.original_name,
-				showInfo: data,
-				showId: data.id,
-				seasons: data.seasons,
-				seasonNames: seasonNames
+				movieTitle: data.original_title,
+				movieInfo: data,
+				movieId: data.id
 			});
-			// console.log(this.state.showInfo);
+			console.log(this.state.movieInfo);
 		});
 	};
 
 	// function to add a new show to our list
-	addShow = evt => {
+	addMovie = evt => {
 		evt.preventDefault();
 
 		{
 			this.setState({ loadingStatus: true });
 			// object for our show that will be added to the local json
-			const newShow = {
+			const newMovie = {
 				userId: parseInt(sessionStorage.getItem("credentials")),
-				showTitle: this.state.showTitle,
+				movieTitle: this.state.movieTitle,
 				dateWatched: this.state.dateWatched,
-				seasonProgress: this.state.seasonProgress,
-				episodeProgress: this.state.episodeProgress,
 				timestamp: this.state.timestamp,
-				showId: this.state.showId,
+				movieId: this.state.movieId,
 				status: this.state.status,
-				movie: false,
+				movie: true,
 				loadingStatus: false
 			};
 			// api call that will post to the json server and push us back to the add show list
-			ShowManager.checkUserShowList(newShow.userId, newShow.showTitle).then(
-				parsedResponse => {
-					if (parsedResponse.length === 0) {
-						ShowManager.post(newShow);
-						this.handleClose();
-					} else {
-						alert("This show is already on your list!");
-					}
+			MovieManager.checkUserMovieList(
+				newMovie.userId,
+				newMovie.movieTitle
+			).then(parsedResponse => {
+				if (parsedResponse.length === 0) {
+					MovieManager.post(newMovie);
+					this.handleClose();
+				} else {
+					alert("This show is already on your list!");
 				}
-			);
+			});
 		}
 	};
 
@@ -156,7 +130,7 @@ class ShowAddModal extends Component {
 
 		return (
 			// adds a neat button below each show card that will call our modal
-			<Card.Content key={this.state.showId} extra>
+			<Card.Content key={this.state.movieId} extra>
 				<Modal
 					trigger={
 						<Button className="modal-add-button" onClick={this.handleOpen}>
@@ -164,28 +138,28 @@ class ShowAddModal extends Component {
 							Add to My List
 						</Button>
 					}
-					onOpen={this.getShowDetails}
+					onOpen={this.getMovieDetails}
 					open={this.state.modalOpen}
 					onClose={this.handleClose}
 					closeIcon
 				>
 					{/* header for our modal, show title */}
-					<Modal.Header>{this.props.showProp.original_name}</Modal.Header>
+					<Modal.Header>{this.props.movieProp.original_title}</Modal.Header>
 					{/* poster for our modal */}
 					<Modal.Content image>
 						<Image
 							wrapped
 							size="medium"
-							src={`https://image.tmdb.org/t/p/original/${this.props.showProp.poster_path}`}
+							src={`https://image.tmdb.org/t/p/original/${this.props.movieProp.poster_path}`}
 						/>
 						{/* this checks to see if an air date exists and then takes the full date and splits it to show only the year, for aesthetic purposes */}
 						<Modal.Description>
-							{this.props.showProp.first_air_date &&
-							this.props.showProp.first_air_date.length > 1 ? (
+							{this.props.movieProp.release_date &&
+							this.props.movieProp.release_date.length > 1 ? (
 								// display the year as a header
 								<Header>
 									<span className="date">
-										{this.props.showProp.first_air_date.split("-")[0]}
+										{this.props.movieProp.release_date.split("-")[0]}
 									</span>
 								</Header>
 							) : (
@@ -193,7 +167,7 @@ class ShowAddModal extends Component {
 							)}
 
 							{/* a brief overview of the show, pulled from the api */}
-							<p>{this.props.showProp.overview}</p>
+							<p>{this.props.movieProp.overview}</p>
 
 							{/* a form for entering the information we'll save to our local json */}
 							<Form>
@@ -234,7 +208,7 @@ class ShowAddModal extends Component {
 								) : (
 									!null
 								)}
-								<Form.Group>
+								{/* <Form.Group>
 									{this.state.seasonNames && this.state.seasonNames.length > 0
 										? [
 												<Form.Field>
@@ -258,8 +232,8 @@ class ShowAddModal extends Component {
 												</Form.Field>
 										  ]
 										: !null}
-								</Form.Group>
-								<Button type="submit" color="green" onClick={this.addShow}>
+								</Form.Group> */}
+								<Button type="submit" color="green" onClick={this.addMovie}>
 									<Icon name="add" /> Add
 								</Button>
 
@@ -275,4 +249,4 @@ class ShowAddModal extends Component {
 	}
 }
 
-export default ShowAddModal;
+export default MovieAddModal;

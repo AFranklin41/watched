@@ -4,7 +4,7 @@ const remoteURL = `http://localhost:5002`;
 
 export default {
 	getUserShowList(userId) {
-		return fetch(`${remoteURL}/userShows?userId=${userId}&_expand=show`).then(
+		return fetch(`${remoteURL}/userMedia?userId=${userId}&movie=false`).then(
 			res => res.json()
 		);
 	},
@@ -23,13 +23,13 @@ export default {
 	},
 
 	checkUserShowList(userId, showTitle) {
-		return fetch(`${remoteURL}/userShows?userId=${userId}&showTitle=${showTitle}`).then(
-			res => res.json()
-		);
+		return fetch(
+			`${remoteURL}/userMedia?userId=${userId}&showTitle=${showTitle}&movie=false`
+		).then(res => res.json());
 	},
 
 	post(newShow) {
-		return fetch(`${remoteURL}/userShows`, {
+		return fetch(`${remoteURL}/userMedia`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

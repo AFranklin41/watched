@@ -7,6 +7,8 @@ import ShowList from "./show/ShowList";
 import ShowCard from "./show/ShowCard";
 import ShowAdd from "./show/ShowAdd";
 import ShowAddModal from "./show/ShowAddModal";
+import MovieList from "./movie/MovieList";
+import MovieAdd from "./movie/MovieAdd";
 
 class ApplicationViews extends Component {
 	render() {
@@ -30,6 +32,20 @@ class ApplicationViews extends Component {
 					path="/shows/new"
 					render={props => {
 						return <ShowAdd {...props} />;
+					}}
+				/>
+				<Route
+					exact
+					path="/movies"
+					render={props => {
+						return <MovieList {...props} />;
+					}}
+				/>
+				<Route
+					exact
+					path="/movies/new"
+					render={props => {
+						return <MovieAdd {...props} />;
 					}}
 				/>
 				{/* <Route

@@ -1,52 +1,91 @@
 {
-	"users": [
-		{
-			"aud": "google-oauth2|110376823960518198428",
-			"name": "arfranklin41",
-			"id": 1
-		},
-		{
-			"aud": "auth0|5da5e14e0e30b90c69f5f40b",
-			"name": "a",
-			"id": 40
-		}
-	],
-	"userShows": [
-		{
-			"id": 1,
-			"userId": 1,
-			"showId": 53300,
-			"dateWatched": "time",
-			"progress": "show timestamp"
-		},
-		{
-			"id": 2,
-			"userId": 1,
-			"showId": 2,
-			"dateWatched": "time",
-			"progress": "show timestamp"
-		},
-		{
-			"userId": 1,
-			"showTitle": "He-Man and the Masters of the Universe",
-			"dateWatched": "2019-10-18",
-			"seasonProgress": "Season 1",
-			"episodeProgress": "47",
-			"timestamp": "23:47",
-			"showId": 931,
-			"status": "Completed",
-			"movie": false,
-			"loadingStatus": false,
-			"id": 3
-		}
-	],
-	"userMovies": [
-		{
-			"id": 1,
-			"userId": 1,
-			"movieId": 1,
-			"dateWatched": "time",
-			"progress": "show timestamp"
-		}
-	]
+  "users": [
+    {
+      "aud": "google-oauth2|110376823960518198428",
+      "name": "arfranklin41",
+      "id": 1
+    },
+    {
+      "aud": "auth0|5da5e14e0e30b90c69f5f40b",
+      "name": "a",
+      "id": 40
+    }
+  ],
+  "userMedia": [
+    {
+      "id": 1,
+      "userId": 1,
+      "showId": 53300,
+      "dateWatched": "time",
+      "progress": "show timestamp"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "showId": 2,
+      "dateWatched": "time",
+      "progress": "show timestamp"
+    },
+    {
+      "userId": 1,
+      "showTitle": "He-Man and the Masters of the Universe",
+      "dateWatched": "2019-10-18",
+      "seasonProgress": "Season 1",
+      "episodeProgress": "47",
+      "timestamp": "23:47",
+      "showId": 931,
+      "status": "Completed",
+      "movie": false,
+      "loadingStatus": false,
+      "id": 3
+    },
+    {
+      "userId": 1,
+      "showTitle": "He Knew He Was Right",
+      "dateWatched": "2019-10-18",
+      "seasonProgress": "Miniseries",
+      "episodeProgress": "3",
+      "timestamp": "25:55",
+      "showId": 8177,
+      "status": "Watching",
+      "movie": false,
+      "loadingStatus": false,
+      "id": 4
+    },
+    {
+      "userId": 1,
+      "showTitle": "He & She",
+      "dateWatched": "2019-10-18",
+      "seasonProgress": "Season 1",
+      "episodeProgress": "26",
+      "timestamp": "23:47",
+      "showId": 13439,
+      "status": "Completed",
+      "movie": false,
+      "loadingStatus": false,
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "movieTitle": "Don't Worry, He Won't Get Far on Foot",
+      "dateWatched": "2019-10-21",
+      "timestamp": "",
+      "movieId": 443009,
+      "status": "Completed",
+      "movie": true,
+      "loadingStatus": false,
+      "id": 9
+    },
+    {
+      "userId": 1,
+      "movieTitle": "He Never Died",
+      "dateWatched": "2019-10-21",
+      "timestamp": "",
+      "movieId": 279690,
+      "status": "Completed",
+      "movie": true,
+      "loadingStatus": false,
+      "id": 10
+    }
+  ]
 }

@@ -1,40 +1,11 @@
 import React, { Component } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 import ShowAddModal from "./ShowAddModal";
-import ShowManager from "../../modules/ShowManager";
+// import ShowManager from "../../modules/ShowManager";
 import "./ShowCard.css";
-import { thisExpression } from "@babel/types";
 
 class ShowCard extends Component {
-	state = {
-		showTitle: "",
-		alreadyExists: false
-	};
-
-	checkUserShowList = () => {
-		ShowManager.getShowDetails(this.props.showProp.id).then(({ data }) => {
-			this.setState({
-				showTitle: data.original_name
-			});
-			ShowManager.checkUserShowList(
-				parseInt(sessionStorage.getItem("credentials")),
-				this.state.showTitle
-			).then(parsedResponse => {
-				if (parsedResponse.length === 0) {
-					this.setState({
-						alreadyExists: false
-					});
-				} else {
-					this.setState({
-						alreadyExists: true
-					});
-				}
-			});
-		});
-	};
-
 	render() {
-		this.checkUserShowList();
 		return (
 			<>
 				<Card key={this.props.showProp.id}>
@@ -56,12 +27,10 @@ class ShowCard extends Component {
 						) : (
 							!null
 						)}
-						{this.props.match.path === "/shows/new" &&
-						this.state.alreadyExists === false ? (
+						{this.props.match.path === "/shows/new" ? (
 							<ShowAddModal {...this.props} />
 						) : (
-							// <ShowRemoveModal {...this.props} />
-							<Button>A delete button</Button>
+							!null
 						)}
 					</Card.Content>
 				</Card>
