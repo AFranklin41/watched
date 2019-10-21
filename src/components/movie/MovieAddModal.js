@@ -74,6 +74,8 @@ class MovieAddModal extends Component {
 
 			this.setState({
 				movieTitle: data.original_title,
+				posterPath: data.poster_path,
+				airDate: data.release_date,
 				movieInfo: data,
 				movieId: data.id
 			});
@@ -91,6 +93,8 @@ class MovieAddModal extends Component {
 			const newMovie = {
 				userId: parseInt(sessionStorage.getItem("credentials")),
 				movieTitle: this.state.movieTitle,
+				posterPath: this.state.posterPath,
+				airDate: this.state.airDate,
 				dateWatched: this.state.dateWatched,
 				timestamp: this.state.timestamp,
 				movieId: this.state.movieId,

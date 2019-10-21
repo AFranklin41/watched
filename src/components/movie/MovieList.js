@@ -1,13 +1,35 @@
 import React, { Component } from "react";
-import MovieCard from "./MovieCard";
+import _ from "lodash";
+import MovieListTable from "./MovieListTable";
 import MovieManager from "../../modules/MovieManager";
-import { Button } from "semantic-ui-react";
+import { Button, Table } from "semantic-ui-react";
 
 class MovieList extends Component {
 	//define what this component needs to render
 	state = {
 		movies: [],
+		column: null,
+		direction: null,
 		loadingStatus: false
+	};
+
+	handleSort = clickedColumn => () => {
+		const { column, movies, direction } = this.state;
+
+		if (column !== clickedColumn) {
+			this.setState({
+				column: clickedColumn,
+				movies: _.sortBy(movies, [clickedColumn]),
+				direction: "ascending"
+			});
+
+			return;
+		}
+
+		this.setState({
+			data: movies.reverse(),
+			direction: direction === "ascending" ? "descending" : "ascending"
+		});
 	};
 
 	componentDidMount() {
@@ -22,6 +44,8 @@ class MovieList extends Component {
 	}
 
 	render() {
+		const { column, direction } = this.state;
+
 		return (
 			<>
 				<section className="section-content">
@@ -34,16 +58,42 @@ class MovieList extends Component {
 					</Button>
 					<br />
 				</section>
-				<div className="container-cards">
-					{this.state.movies.map(singleMovie => (
-						<MovieCard
-							// deleteMovieProp={this.deleteMovie}
-							key={singleMovie.id}
-							movieProp={singleMovie}
-							{...this.props}
-						/>
-					))}
-				</div>
+				<Table sortable celled structured>
+					<Table.Header>
+						<Table.Row>
+							<Table.HeaderCell>Image</Table.HeaderCell>
+							<Table.HeaderCell
+								sorted={column === "showTitle" ? direction : null}
+								onClick={this.handleSort("showTitle")}
+							>
+								Title
+							</Table.HeaderCell>
+							<Table.HeaderCell
+								sorted={column === "dateWatched" ? direction : null}
+								onClick={this.handleSort("dateWatched")}
+							>
+								Date Watched
+							</Table.HeaderCell>
+							<Table.HeaderCell>Timestamp</Table.HeaderCell>
+							<Table.HeaderCell
+								sorted={column === "status" ? direction : null}
+								onClick={this.handleSort("status")}
+							>
+								Completed
+							</Table.HeaderCell>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{this.state.movies.map(singleMovie => (
+							<MovieListTable
+								// deleteShowProp={this.deleteShow}
+								key={singleMovie.id}
+								movieProp={singleMovie}
+								{...this.props}
+							/>
+						))}
+					</Table.Body>
+				</Table>
 			</>
 		);
 	}

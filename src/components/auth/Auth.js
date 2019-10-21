@@ -7,7 +7,7 @@ class Auth {
 			domain: AuthConfig.domain,
 			audience: `https://${AuthConfig.domain}/userinfo`,
 			clientID: AuthConfig.clientId,
-			redirectUri: "http://localhost:3000/callback",
+			redirectUri: "http://127.0.0.1:3000/callback",
 			responseType: "id_token",
 			scope: "openid profile"
 		});
@@ -28,7 +28,8 @@ class Auth {
 	}
 
 	isAuthenticated() {
-		return new Date().getTime() < this.expiresAt;
+		// return new Date().getTime() < this.expiresAt;
+		return sessionStorage.getItem("credentials") !== null
 	}
 
 	signIn() {
@@ -45,6 +46,7 @@ class Auth {
 	handleAuthentication() {
 		return new Promise((resolve, reject) => {
 			this.auth0.parseHash((err, authResult) => {
+
 				if (err) return reject(err);
 				if (!authResult || !authResult.idToken) {
 					return reject(err);
@@ -57,19 +59,21 @@ class Auth {
 
 	signOut() {
 		this.auth0.logout({
-			returnTo: "http://localhost:3000",
+			returnTo: "http://127.0.0.1:3000/",
 			clientID: AuthConfig.clientId
 		});
 	}
 
 	silentAuth() {
-		return new Promise((resolve, reject) => {
-			this.auth0.checkSession({}, (err, authResult) => {
-				if (err) return reject(err);
-				this.setSession(authResult);
-				resolve();
-			});
-		});
+
+		// return new Promise((resolve, reject) => {
+		// 	this.auth0.checkSession({}, (err, authResult) => {
+		// 		debugger
+		// 		if (err) return reject(err);
+		// 		this.setSession(authResult);
+		// 		resolve();
+		// 	});
+		// });
 	}
 }
 

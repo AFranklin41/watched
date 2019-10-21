@@ -22,8 +22,8 @@ class NavBar extends Component {
 			<>
 				<Menu>
 					<Menu.Item
-						name="home"
-						active={activeItem === "home"}
+						name=""
+						active={activeItem === ""}
 						onClick={this.handleItemClick}
 					>
 						Home
@@ -55,7 +55,7 @@ class NavBar extends Component {
 							</Menu.Item>
 						) : (
 							[
-								<Menu.Item key="1">{auth0Client.getProfile().name}</Menu.Item>,
+
 								<Menu.Item
 									key="2"
 									name="signOut"
@@ -74,3 +74,4 @@ class NavBar extends Component {
 }
 
 export default withRouter(NavBar);
+{/* <Menu.Item key="1">{auth0Client.getProfile().name}</Menu.Item>, */}

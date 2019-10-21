@@ -97,6 +97,8 @@ class ShowAddModal extends Component {
 
 			this.setState({
 				showTitle: data.original_name,
+				posterPath: data.poster_path,
+				airDate: data.first_air_date,
 				showInfo: data,
 				showId: data.id,
 				seasons: data.seasons,
@@ -116,6 +118,8 @@ class ShowAddModal extends Component {
 			const newShow = {
 				userId: parseInt(sessionStorage.getItem("credentials")),
 				showTitle: this.state.showTitle,
+				posterPath: this.state.posterPath,
+				airDate: this.state.airDate,
 				dateWatched: this.state.dateWatched,
 				seasonProgress: this.state.seasonProgress,
 				episodeProgress: this.state.episodeProgress,

@@ -1,12 +1,10 @@
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import Home from "./home/Home";
 import Callback from "./auth/Callback";
 import auth0client from "./auth/Auth";
 import ShowList from "./show/ShowList";
-import ShowCard from "./show/ShowCard";
 import ShowAdd from "./show/ShowAdd";
-import ShowAddModal from "./show/ShowAddModal";
 import MovieList from "./movie/MovieList";
 import MovieAdd from "./movie/MovieAdd";
 
@@ -14,7 +12,7 @@ class ApplicationViews extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Route
+				{/* <Route
 					path="/home"
 					render={props => {
 						return <Home {...props} />;
@@ -47,16 +45,12 @@ class ApplicationViews extends Component {
 					render={props => {
 						return <MovieAdd {...props} />;
 					}}
-				/>
-				{/* <Route
-					path="/home"
+				/> */}
+				<Route
+					exact
+					path="/"
 					render={props => {
-						if (auth0client.isAuthenticated()) {
-							return <Home {...props} />;
-						} else {
-							auth0client.signIn();
-							return null;
-						}
+						return <Home {...props} />;
 					}}
 				/>
 
@@ -75,12 +69,46 @@ class ApplicationViews extends Component {
 						if (auth0client.isAuthenticated()) {
 							return <ShowList {...props} />;
 						} else {
-							auth0client.signIn();
-							return null;
+							return <Redirect to="/" />;
 						}
 					}}
 				/>
-				 */}
+
+				<Route
+					exact
+					path="/shows/new"
+					render={props => {
+						if (auth0client.isAuthenticated()) {
+							return <ShowAdd {...props} />;
+						} else {
+							return <Redirect to="/" />;
+						}
+					}}
+				/>
+
+				<Route
+					exact
+					path="/movies"
+					render={props => {
+						if (auth0client.isAuthenticated()) {
+							return <MovieList {...props} />;
+						} else {
+							return <Redirect to="/" />;
+						}
+					}}
+				/>
+
+				<Route
+					exact
+					path="/movies/new"
+					render={props => {
+						if (auth0client.isAuthenticated()) {
+							return <MovieAdd {...props} />;
+						} else {
+							return <Redirect to="/" />;
+						}
+					}}
+				/>
 			</React.Fragment>
 		);
 	}
