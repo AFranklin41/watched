@@ -13,7 +13,7 @@ class MovieCard extends Component {
 							src={`https://image.tmdb.org/t/p/original/${this.props.movieProp.poster_path}`}
 						/>
 						<Card.Header className="card-header">
-							{this.props.movieProp.original_name}
+							{this.props.movieProp.original_title}
 						</Card.Header>
 
 						{this.props.movieProp.release_date &&

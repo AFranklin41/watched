@@ -36,5 +36,22 @@ export default {
 			},
 			body: JSON.stringify(newShow)
 		}).then(data => data.json());
+	},
+	get(id) {
+		return fetch(`${remoteURL}/userMedia/${id}`).then(result => result.json());
+	},
+	delete(id) {
+		return fetch(`${remoteURL}/userMedia/${id}`, {
+			method: "DELETE"
+		}).then(result => result.json());
+	},
+	update(editedShow) {
+		return fetch(`${remoteURL}/userMedia/${editedShow.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(editedShow)
+		}).then(data => data.json());
 	}
 };

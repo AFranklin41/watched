@@ -11,10 +11,7 @@ import {
 	Icon,
 	Image,
 	Form,
-	Checkbox,
-	Label,
-	Dropdown,
-	SegmentInline
+	Dropdown
 } from "semantic-ui-react";
 // import custom css changes
 import "./ShowCard.css";

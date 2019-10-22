@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import ShowManager from "../../modules/ShowManager";
-import { Parallax, Background } from "react-parallax";
-import { Header, Button } from "semantic-ui-react";
-import auth0Client from "../auth/Auth";
+import { Parallax } from "react-parallax";
 import "./Home.css";
 
 // import ShowCard from "../show/ShowCard";

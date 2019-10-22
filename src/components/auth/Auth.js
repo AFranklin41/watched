@@ -28,8 +28,7 @@ class Auth {
 	}
 
 	isAuthenticated() {
-		// return new Date().getTime() < this.expiresAt;
-		return sessionStorage.getItem("credentials") !== null
+		return sessionStorage.getItem("credentials") !== null;
 	}
 
 	signIn() {
@@ -46,7 +45,6 @@ class Auth {
 	handleAuthentication() {
 		return new Promise((resolve, reject) => {
 			this.auth0.parseHash((err, authResult) => {
-
 				if (err) return reject(err);
 				if (!authResult || !authResult.idToken) {
 					return reject(err);
@@ -65,7 +63,6 @@ class Auth {
 	}
 
 	silentAuth() {
-
 		// return new Promise((resolve, reject) => {
 		// 	this.auth0.checkSession({}, (err, authResult) => {
 		// 		debugger

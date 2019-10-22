@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import MovieListTable from "./MovieListTable";
 import MovieManager from "../../modules/MovieManager";
-import { Button, Table } from "semantic-ui-react";
+import { Button, Table, Icon } from "semantic-ui-react";
 
 class MovieList extends Component {
 	//define what this component needs to render
@@ -32,11 +32,35 @@ class MovieList extends Component {
 		});
 	};
 
+	deleteMovie = movieId => {
+		const userId = parseInt(sessionStorage.getItem("credentials"));
+		MovieManager.get(movieId).then(movie => {
+			MovieManager.delete(movie.id).then(() => {
+				MovieManager.getUserMovieList(userId).then(movies => {
+					this.setState({
+						movies: movies
+					});
+				});
+			});
+		});
+	};
+
+	editMovie = movieId => {
+		const userId = parseInt(sessionStorage.getItem("credentials"));
+		MovieManager.get(movieId).then(movie => {
+			MovieManager.edit(movie.id).then(() => {
+				MovieManager.getUserMovieList(userId).then(movies => {
+					this.setState({
+						movies: movies
+					});
+				});
+			});
+		});
+	};
+
 	componentDidMount() {
 		const userId = parseInt(sessionStorage.getItem("credentials"));
-		console.log(userId);
 		MovieManager.getUserMovieList(userId).then(movies => {
-			console.log(movies);
 			this.setState({
 				movies: movies
 			});
@@ -54,6 +78,7 @@ class MovieList extends Component {
 							this.props.history.push("/movies/new");
 						}}
 					>
+						<Icon name="add" />
 						Add Movie
 					</Button>
 					<br />
@@ -86,7 +111,7 @@ class MovieList extends Component {
 					<Table.Body>
 						{this.state.movies.map(singleMovie => (
 							<MovieListTable
-								// deleteShowProp={this.deleteShow}
+								deleteMovieProp={this.deleteMovie}
 								key={singleMovie.id}
 								movieProp={singleMovie}
 								{...this.props}

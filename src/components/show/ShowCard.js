@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Button } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
 import ShowAddModal from "./ShowAddModal";
 // import ShowManager from "../../modules/ShowManager";
 import "./ShowCard.css";

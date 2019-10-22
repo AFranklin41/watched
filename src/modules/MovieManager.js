@@ -1,4 +1,3 @@
-
 import apiKey from "./ApiKey";
 import axios from "axios";
 const remoteURL = `http://localhost:5002`;
@@ -20,13 +19,15 @@ export default {
 		);
 	},
 	getMovieDetails(id) {
-		return axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`);
+		return axios.get(
+			`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
+		);
 	},
 
 	checkUserMovieList(userId, movieTitle) {
-		return fetch(`${remoteURL}/userMedia?userId=${userId}&movieTitle=${movieTitle}&movie=true`).then(
-			res => res.json()
-		);
+		return fetch(
+			`${remoteURL}/userMedia?userId=${userId}&movieTitle=${movieTitle}&movie=true`
+		).then(res => res.json());
 	},
 
 	post(newMovie) {
@@ -36,6 +37,25 @@ export default {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(newMovie)
+		}).then(data => data.json());
+	},
+	get(movieId) {
+		return fetch(`${remoteURL}/userMedia/${movieId}`).then(
+			result => result.json()
+		);
+	},
+	delete(movieId) {
+		return fetch(`${remoteURL}/userMedia/${movieId}`, {
+			method: "DELETE"
+		}).then(result => result.json());
+	},
+	update(editedMovie) {
+		return fetch(`${remoteURL}/userMedia/${editedMovie.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(editedMovie)
 		}).then(data => data.json());
 	}
 };

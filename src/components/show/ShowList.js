@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import ShowListCard from "./ShowListCard";
 import ShowListTable from "./ShowListTable";
 import ShowManager from "../../modules/ShowManager";
-import { Button, Card, Grid, Table, Icon } from "semantic-ui-react";
+import { Button, Table, Icon } from "semantic-ui-react";
 
 class ShowList extends Component {
 	//define what this component needs to render
@@ -33,6 +32,32 @@ class ShowList extends Component {
 		});
 	};
 
+	deleteShow = showId => {
+		const userId = parseInt(sessionStorage.getItem("credentials"));
+		ShowManager.get(showId).then(show => {
+			ShowManager.delete(show.id).then(() => {
+				ShowManager.getUserShowList(userId).then(shows => {
+					this.setState({
+						shows: shows
+					});
+				});
+			});
+		});
+	};
+
+	editShow = showId => {
+		const userId = parseInt(sessionStorage.getItem("credentials"));
+		ShowManager.get(showId).then(show => {
+			ShowManager.edit(show.id).then(() => {
+				ShowManager.getUserShowList(userId).then(shows => {
+					this.setState({
+						shows: shows
+					});
+				});
+			});
+		});
+	};
+
 	componentDidMount() {
 		const userId = parseInt(sessionStorage.getItem("credentials"));
 		console.log(userId);
@@ -55,6 +80,7 @@ class ShowList extends Component {
 							this.props.history.push("/shows/new");
 						}}
 					>
+						<Icon name="add" />
 						Add Show
 					</Button>
 					<br />
@@ -89,7 +115,8 @@ class ShowList extends Component {
 					<Table.Body>
 						{this.state.shows.map(singleShow => (
 							<ShowListTable
-								// deleteShowProp={this.deleteShow}
+								editShowProp={this.editShow}
+								deleteShowProp={this.deleteShow}
 								key={singleShow.id}
 								showProp={singleShow}
 								{...this.props}

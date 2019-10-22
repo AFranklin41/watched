@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Table, Icon, Header, Image } from "semantic-ui-react";
-
+import "./MovieListTable.css";
 class MovieListTable extends Component {
 	render() {
+		// console.log(this.props.movieProp.id);
 		return (
 			<>
 				<Table.Row>
@@ -14,7 +15,25 @@ class MovieListTable extends Component {
 							/>
 						</Header>
 					</Table.Cell>
-					<Table.Cell>{this.props.movieProp.movieTitle}</Table.Cell>
+					<Table.Cell verticalAlign="middle">
+						{this.props.movieProp.movieTitle}
+						<div id="edit-delete-container">
+							<Icon
+								name="edit"
+								link
+								onClick={() => {
+									this.props.editMovieProp(this.props.movieProp.id);
+								}}
+							/>
+							<Icon
+								name="delete"
+								link
+								onClick={() => {
+									this.props.deleteMovieProp(this.props.movieProp.id);
+								}}
+							/>
+						</div>
+					</Table.Cell>
 					<Table.Cell>{this.props.movieProp.dateWatched}</Table.Cell>
 					<Table.Cell textAlign="right">
 						{this.props.movieProp.timestamp}
