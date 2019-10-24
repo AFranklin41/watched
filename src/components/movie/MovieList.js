@@ -15,7 +15,6 @@ class MovieList extends Component {
 
 	handleSort = clickedColumn => () => {
 		const { column, movies, direction } = this.state;
-
 		if (column !== clickedColumn) {
 			this.setState({
 				column: clickedColumn,
@@ -45,15 +44,12 @@ class MovieList extends Component {
 		});
 	};
 
-	editMovie = movieId => {
+	refreshList = () => {
 		const userId = parseInt(sessionStorage.getItem("credentials"));
-		MovieManager.get(movieId).then(movie => {
-			MovieManager.edit(movie.id).then(() => {
-				MovieManager.getUserMovieList(userId).then(movies => {
-					this.setState({
-						movies: movies
-					});
-				});
+
+		MovieManager.getUserMovieList(userId).then(movies => {
+			this.setState({
+				movies: movies
 			});
 		});
 	};
@@ -111,6 +107,7 @@ class MovieList extends Component {
 					<Table.Body>
 						{this.state.movies.map(singleMovie => (
 							<MovieListTable
+								refreshListProp={this.refreshList}
 								deleteMovieProp={this.deleteMovie}
 								key={singleMovie.id}
 								movieProp={singleMovie}

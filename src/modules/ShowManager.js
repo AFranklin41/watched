@@ -37,11 +37,11 @@ export default {
 			body: JSON.stringify(newShow)
 		}).then(data => data.json());
 	},
-	get(id) {
-		return fetch(`${remoteURL}/userMedia/${id}`).then(result => result.json());
+	get(showId) {
+		return fetch(`${remoteURL}/userMedia/${showId}`).then(result => result.json());
 	},
-	delete(id) {
-		return fetch(`${remoteURL}/userMedia/${id}`, {
+	delete(showId) {
+		return fetch(`${remoteURL}/userMedia/${showId}`, {
 			method: "DELETE"
 		}).then(result => result.json());
 	},

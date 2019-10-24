@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Table, Icon, Header, Image } from "semantic-ui-react";
 import "../movie/MovieListTable.css";
+import ShowEditModal from "./ShowEditModal";
 
-class ShowCard extends Component {
+class ShowListTable extends Component {
 	render() {
 		return (
 			<>
-				<Table.Row>
+				<Table.Row key={this.props.showProp.showId}>
 					<Table.Cell>
 						<Header as="h4" image>
 							<Image
@@ -18,7 +19,7 @@ class ShowCard extends Component {
 					<Table.Cell>
 						{this.props.showProp.showTitle}
 						<div id="edit-delete-container">
-							<Icon name="edit" onClick={this.edit} />
+							<ShowEditModal key={this.props.showProp.showId} {...this.props} />
 							<Icon
 								name="delete"
 								link
@@ -50,4 +51,4 @@ class ShowCard extends Component {
 	}
 }
 
-export default ShowCard;
+export default ShowListTable;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Table, Icon, Header, Image } from "semantic-ui-react";
 import "./MovieListTable.css";
+import MovieEditModal from "./MovieEditModal";
 class MovieListTable extends Component {
 	render() {
 		// console.log(this.props.movieProp.id);
@@ -18,12 +19,9 @@ class MovieListTable extends Component {
 					<Table.Cell verticalAlign="middle">
 						{this.props.movieProp.movieTitle}
 						<div id="edit-delete-container">
-							<Icon
-								name="edit"
-								link
-								onClick={() => {
-									this.props.editMovieProp(this.props.movieProp.id);
-								}}
+							<MovieEditModal
+								key={this.props.movieProp.movieId}
+								{...this.props}
 							/>
 							<Icon
 								name="delete"

@@ -10,9 +10,23 @@ class ShowList extends Component {
 		shows: [],
 		column: null,
 		direction: null,
-		loadingStatus: false
+		loadingStatus: false,
+		showTitle: "",
+		posterPath: "",
+		airDate: "",
+		dateWatched: "",
+		seasonEpisodeCount: "",
+		seasonProgress: "",
+		episodeProgress: "",
+		timestamp: "",
+		showId: "",
+		showInfo: "",
+		seasons: [],
+		seasonNames: [],
+		status: "",
+		alreadyExists: false,
+		modalOpen: false
 	};
-
 	handleSort = clickedColumn => () => {
 		const { column, shows, direction } = this.state;
 
@@ -45,29 +59,25 @@ class ShowList extends Component {
 		});
 	};
 
-	editShow = showId => {
-		const userId = parseInt(sessionStorage.getItem("credentials"));
-		ShowManager.get(showId).then(show => {
-			ShowManager.edit(show.id).then(() => {
-				ShowManager.getUserShowList(userId).then(shows => {
-					this.setState({
-						shows: shows
-					});
-				});
-			});
-		});
-	};
-
 	componentDidMount() {
 		const userId = parseInt(sessionStorage.getItem("credentials"));
-		console.log(userId);
+
 		ShowManager.getUserShowList(userId).then(shows => {
-			console.log(shows);
 			this.setState({
 				shows: shows
 			});
 		});
 	}
+
+	refreshList = () => {
+		const userId = parseInt(sessionStorage.getItem("credentials"));
+
+		ShowManager.getUserShowList(userId).then(shows => {
+			this.setState({
+				shows: shows
+			});
+		});
+	};
 
 	render() {
 		const { column, direction } = this.state;
@@ -115,7 +125,8 @@ class ShowList extends Component {
 					<Table.Body>
 						{this.state.shows.map(singleShow => (
 							<ShowListTable
-								editShowProp={this.editShow}
+								refreshListProp={this.refreshList}
+								updateShowProp={this.updateShow}
 								deleteShowProp={this.deleteShow}
 								key={singleShow.id}
 								showProp={singleShow}

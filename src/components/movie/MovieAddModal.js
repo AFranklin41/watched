@@ -15,6 +15,7 @@ import {
 } from "semantic-ui-react";
 // import custom css changes
 import "./MovieCard.css";
+import MovieReelImage from "./moviereelpng.png";
 
 // create our new component that will show a modal
 class MovieAddModal extends Component {
@@ -34,23 +35,22 @@ class MovieAddModal extends Component {
 	// function to handle form field changes in our modal
 	handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
-	// function to specifically handle changing seasons so we can get the total episode count after a season is selected
-	// seasonHandleChange = (e, { name, value }) => {
-	// 	console.log(this.state.seasons);
-	// 	this.setState({
-	// 		[name]: value,
-	// 		seasonEpisodeCount: this.state.seasons.find(
-	// 			singleSeason => singleSeason.name === value
-	// 		).episode_count
-	// 	});
-	// 	console.log(this.state.seasonEpisodeCount);
-	// };
-
 	// function to handle opening our modal
 	handleOpen = () => this.setState({ modalOpen: true });
 
 	// function to handle closing our modal
-	handleClose = () => this.setState({ modalOpen: false });
+	handleClose = () =>
+		this.setState({
+			movieTitle: "",
+			dateWatched: "",
+			timestamp: "",
+			movieId: "",
+			movieInfo: "",
+			status: "",
+			alreadyExists: false,
+			modalOpen: false,
+			loadingStatus: false
+		});
 
 	// fetching specific show details from our external api and set them to state
 	getMovieDetails = () => {
@@ -151,11 +151,16 @@ class MovieAddModal extends Component {
 					<Modal.Header>{this.props.movieProp.original_title}</Modal.Header>
 					{/* poster for our modal */}
 					<Modal.Content image>
-						<Image
-							wrapped
-							size="medium"
-							src={`https://image.tmdb.org/t/p/original/${this.props.movieProp.poster_path}`}
-						/>
+						{this.props.movieProp.poster_path &&
+						this.props.movieProp.poster_path != null ? (
+							<Image
+								wrapped
+								size="medium"
+								src={`https://image.tmdb.org/t/p/original/${this.props.movieProp.poster_path}`}
+							/>
+						) : (
+							<Image wrapped size="medium" src={MovieReelImage} />
+						)}
 						{/* this checks to see if an air date exists and then takes the full date and splits it to show only the year, for aesthetic purposes */}
 						<Modal.Description>
 							{this.props.movieProp.release_date &&

@@ -15,6 +15,7 @@ import {
 } from "semantic-ui-react";
 // import custom css changes
 import "./ShowCard.css";
+import MovieReelImage from "./moviereelpng.png";
 
 // create our new component that will show a modal
 class ShowAddModal extends Component {
@@ -55,7 +56,23 @@ class ShowAddModal extends Component {
 	handleOpen = () => this.setState({ modalOpen: true });
 
 	// function to handle closing our modal
-	handleClose = () => this.setState({ modalOpen: false });
+	handleClose = () =>
+		this.setState({
+			showTitle: "",
+			dateWatched: "",
+			seasonEpisodeCount: "",
+			seasonProgress: "",
+			episodeProgress: "",
+			timestamp: "",
+			showId: "",
+			showInfo: "",
+			seasons: [],
+			seasonNames: [],
+			status: "",
+			alreadyExists: false,
+			modalOpen: false,
+			loadingStatus: false
+		});
 
 	// fetching specific show details from our external api and set them to state
 	getShowDetails = () => {
@@ -173,12 +190,18 @@ class ShowAddModal extends Component {
 					{/* header for our modal, show title */}
 					<Modal.Header>{this.props.showProp.original_name}</Modal.Header>
 					{/* poster for our modal */}
+
 					<Modal.Content image>
-						<Image
-							wrapped
-							size="medium"
-							src={`https://image.tmdb.org/t/p/original/${this.props.showProp.poster_path}`}
-						/>
+						{this.props.showProp.poster_path &&
+						this.props.showProp.poster_path != null ? (
+							<Image
+								wrapped
+								size="medium"
+								src={`https://image.tmdb.org/t/p/original/${this.props.showProp.poster_path}`}
+							/>
+						) : (
+							<Image wrapped size="medium" src={MovieReelImage} />
+						)}
 						{/* this checks to see if an air date exists and then takes the full date and splits it to show only the year, for aesthetic purposes */}
 						<Modal.Description>
 							{this.props.showProp.first_air_date &&

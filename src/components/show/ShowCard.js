@@ -3,6 +3,7 @@ import { Card, Image } from "semantic-ui-react";
 import ShowAddModal from "./ShowAddModal";
 // import ShowManager from "../../modules/ShowManager";
 import "./ShowCard.css";
+import MovieReelImage from "./moviereelpng.png";
 
 class ShowCard extends Component {
 	render() {
@@ -10,9 +11,16 @@ class ShowCard extends Component {
 			<>
 				<Card key={this.props.showProp.id}>
 					<Card.Content>
-						<Image
-							src={`https://image.tmdb.org/t/p/original/${this.props.showProp.poster_path}`}
-						/>
+						{this.props.showProp.poster_path &&
+						this.props.showProp.poster_path != null ? (
+							<Image
+								wrapped
+								size="medium"
+								src={`https://image.tmdb.org/t/p/original/${this.props.showProp.poster_path}`}
+							/>
+						) : (
+							<Image wrapped size="medium" src={MovieReelImage} />
+						)}
 						<Card.Header className="card-header">
 							{this.props.showProp.original_name}
 						</Card.Header>
