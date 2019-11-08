@@ -1,0 +1,9 @@
+#show-status-pie-chart {
+	display: flex;
+}
+
+#pie-chart-container {
+	display: flex;
+    flex-flow: row nowrap;
+
+}

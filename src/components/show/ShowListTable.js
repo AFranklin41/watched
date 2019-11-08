@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Table, Icon, Header, Image } from "semantic-ui-react";
 import "../movie/MovieListTable.css";
 import ShowEditModal from "./ShowEditModal";
+import ShowDeleteModal from "./ShowDeleteModal";
 
 class ShowListTable extends Component {
 	render() {
@@ -20,6 +21,10 @@ class ShowListTable extends Component {
 						{this.props.showProp.showTitle}
 						<div id="edit-delete-container">
 							<ShowEditModal key={this.props.showProp.showId} {...this.props} />
+							{/* <ShowDeleteModal
+								key={this.props.showProp.showId}
+								{...this.props}
+							/> */}
 							<Icon
 								name="delete"
 								link

@@ -10,10 +10,10 @@ class Callback extends Component {
 		fetch(`http://localhost:5002/users?aud=${auth0Client.getProfile().sub}`)
 			.then(matchingUser => matchingUser.json())
 			.then(matchingUser => {
-				console.log(matchingUser)
+				console.log(matchingUser);
 				// If the the fetch call comes back empty, it means that the user who just logged in with Auth 0 doesn't exist in our json-server database. We need to register them!
 				if (matchingUser.length === 0) {
-					console.log("dit hit")
+					console.log("dit hit");
 					// Create a new user object to post to the db
 					const newUser = {
 						aud: auth0Client.getProfile().sub,
@@ -33,7 +33,6 @@ class Callback extends Component {
 							//Once the POST request is successfully completed, store the PK json-server generated for us in session storage
 							sessionStorage.setItem("credentials", parsedUser.id);
 						});
-
 				} else {
 					// If something DOES come back from the fetch call (i.e. the array has a user in it), that means the user already exists in our db and we just need to log them in
 					console.log(

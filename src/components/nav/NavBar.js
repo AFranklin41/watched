@@ -5,7 +5,9 @@ import { Menu } from "semantic-ui-react";
 import auth0Client from "../auth/Auth";
 
 class NavBar extends Component {
-	state = {};
+	state = {
+		loggedIn: false
+	};
 
 	// handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 	handleItemClick = (e, { name }) => this.props.history.push(`/${name}`);
@@ -15,6 +17,16 @@ class NavBar extends Component {
 		sessionStorage.clear();
 		this.props.history.replace("/");
 	};
+
+	componentDidMount() {
+		debugger;
+		console.log("it mounted!")
+		if (auth0Client.isAuthenticated()) {
+			this.setState({
+				loggedIn: true
+			});
+		}
+	}
 
 	render() {
 		const { activeItem } = this.state;
@@ -44,8 +56,15 @@ class NavBar extends Component {
 					>
 						My Movies
 					</Menu.Item>
+					<Menu.Item
+						name="stats"
+						active={activeItem === "stats"}
+						onClick={this.handleItemClick}
+					>
+						Statistics
+					</Menu.Item>
 					<Menu.Menu position="right">
-						{!auth0Client.isAuthenticated() ? (
+						{!this.state.loggedIn ? (
 							<Menu.Item
 								name="signIn"
 								active={activeItem === "signIn"}
