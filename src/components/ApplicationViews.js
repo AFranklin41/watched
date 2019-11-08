@@ -7,45 +7,12 @@ import ShowList from "./show/ShowList";
 import ShowAdd from "./show/ShowAdd";
 import MovieList from "./movie/MovieList";
 import MovieAdd from "./movie/MovieAdd";
+import Charts from "../chart/Charts";
 
 class ApplicationViews extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				{/* <Route
-					path="/home"
-					render={props => {
-						return <Home {...props} />;
-					}}
-				/>
-				<Route
-					exact
-					path="/shows"
-					render={props => {
-						return <ShowList {...props} />;
-					}}
-				/>
-				<Route
-					exact
-					path="/shows/new"
-					render={props => {
-						return <ShowAdd {...props} />;
-					}}
-				/>
-				<Route
-					exact
-					path="/movies"
-					render={props => {
-						return <MovieList {...props} />;
-					}}
-				/>
-				<Route
-					exact
-					path="/movies/new"
-					render={props => {
-						return <MovieAdd {...props} />;
-					}}
-				/> */}
 				<Route
 					exact
 					path="/"
@@ -104,6 +71,17 @@ class ApplicationViews extends Component {
 					render={props => {
 						if (auth0client.isAuthenticated()) {
 							return <MovieAdd {...props} />;
+						} else {
+							return <Redirect to="/" />;
+						}
+					}}
+				/>
+				<Route
+					exact
+					path="/stats"
+					render={props => {
+						if (auth0client.isAuthenticated()) {
+							return <Charts {...props} />;
 						} else {
 							return <Redirect to="/" />;
 						}
