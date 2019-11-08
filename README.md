@@ -70,11 +70,15 @@ From there you can click add show or movie and search the movie database for the
 
 ![alt text](https://i.imgur.com/aPjR0Kx.png "Show Search")
 
+Clicking on the "Add to my list" button will bring up a prompt where you can enter information about the show or movie you'd like to add, including the date you watched it, the season and episode you were on(using the season and episode information pulled from the movie database), whether or not you completed it, and the time you stopped or paused if you didn't.
+
+![alt text](https://i.imgur.com/sSAT1i1.png "Add Show")
+
 ## Statistics
 
 Here you can see some statistics about your completion rate of shows and movies. This will be expanded in the future to include average rate of completion, overall time spent watching media, and more interesting stats.
 
-~[alt text](https://i.imgur.com/wiIZU5o.png "Stats")
+![alt text](https://i.imgur.com/wiIZU5o.png "Stats")
 
 ## Built with
 
