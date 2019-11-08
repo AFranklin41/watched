@@ -46,6 +46,46 @@ export default apiKey
 
 and replace xxxxxxxxxxxx with your key. 
 
+Once you've done so, save and run the command
+```
+npm start
+``` 
+to start the app!
+
+## Splash Page and Login
+
+You'll need to sign in to access the app's features. You can do so with the sign in button at the top right. You can sign in with google or create an account.
+
 ![alt text](https://i.imgur.com/3au3E2I.jpg "Splash page")
 
+## Show & Movie Lists
+
+Once you're signed in, you can immediately begin searching for movies or shows by click on their respective buttons on the navbar. This will take you to your show or movie list. You can sort by Title(alphabetical), Date Watched, and Completion status by click the respective bars. 
+
+![alt text](https://i.imgur.com/YlXnXWt.png "Show List")
+
+## Search
+
+From there you can click add show or movie and search the movie database for the show or movie you'd like to add! 
+
+![alt text](https://i.imgur.com/aPjR0Kx.png "Show Search")
+
+## Statistics
+
+Here you can see some statistics about your completion rate of shows and movies. This will be expanded in the future to include average rate of completion, overall time spent watching media, and more interesting stats.
+
+~[alt text](https://i.imgur.com/wiIZU5o.png "Stats")
+
+## Built with
+
+⋅⋅* [React](https://reactjs.org/)
+⋅⋅* [React Semantic UI](https://react.semantic-ui.com/)
+⋅⋅* [Recharts](http://recharts.org/en-US/)
+⋅⋅* [npm](https://www.npmjs.com/get-npm)
+
+##Author 
+
+Alex Franklin
+
+https://github.com/AFranklin41/
 
