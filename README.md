@@ -29,3 +29,21 @@ Make an Auth0 account for authentication by visiting https://auth0.com/. Make an
 ## The Movie Database API
 
 You'll need to register an account over at https://www.themoviedb.org/ and request a free API key.
+
+Check out the FAQ here: https://www.themoviedb.org/faq/api. 
+
+Once you have your key, open up the modules folder in VScode or your program of choice, and create a file called
+```
+ApiKey.js
+```
+
+Inside, paste this code:
+```
+const apiKey = "xxxxxxxxxxxx";
+
+export default apiKey
+```
+
+and replace xxxxxxxxxxxx with your key. 
+
+
