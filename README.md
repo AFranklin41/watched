@@ -46,4 +46,6 @@ export default apiKey
 
 and replace xxxxxxxxxxxx with your key. 
 
+![alt text](https://i.imgur.com/3au3E2I.jpg "Splash page")
+
 
