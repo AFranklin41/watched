@@ -82,12 +82,12 @@ Here you can see some statistics about your completion rate of shows and movies.
 
 ## Built with
 
-⋅⋅* [React](https://reactjs.org/)
-⋅⋅* [React Semantic UI](https://react.semantic-ui.com/)
-⋅⋅* [Recharts](http://recharts.org/en-US/)
-⋅⋅* [npm](https://www.npmjs.com/get-npm)
+* [React](https://reactjs.org/)
+* [React Semantic UI](https://react.semantic-ui.com/)
+* [Recharts](http://recharts.org/en-US/)
+* [npm](https://www.npmjs.com/get-npm)
 
-##Author 
+## Author 
 
 Alex Franklin
 
